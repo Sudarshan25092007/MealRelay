@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,29 +12,41 @@ if (process.env.NODE_ENV === 'test') {
 }
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
+const isProd = process.env.NODE_ENV === 'production';
+
+let jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret || jwtSecret === 'dev-mealrelay-jwt-secret-key-32chars-minimum-needed!') {
+  if (isProd) {
+    console.warn(
+      '⚠️ [SECURITY NOTICE] JWT_SECRET was not configured in environment variables. Generated a secure random 256-bit secret for this instance. To persist authentication sessions across server restarts, set a dedicated JWT_SECRET in your hosting dashboard.'
+    );
+    jwtSecret = crypto.randomBytes(32).toString('hex');
+  } else {
+    jwtSecret = 'dev-mealrelay-jwt-secret-key-32chars-minimum-needed!';
+  }
+}
+
 export const config = {
   env: process.env.NODE_ENV || 'development',
   port: parseInt(process.env.PORT, 10) || 5000,
   databaseUrl: process.env.DATABASE_URL,
-  jwtSecret: process.env.JWT_SECRET || 'dev-mealrelay-jwt-secret-key-32chars-minimum-needed!',
+  jwtSecret,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
   isTest: process.env.NODE_ENV === 'test',
-  isProd: process.env.NODE_ENV === 'production'
+  isProd
 };
 
 // Validate required production configurations at startup
 if (config.isProd) {
   const missing = [];
   if (!config.databaseUrl) missing.push('DATABASE_URL');
-  if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'dev-mealrelay-jwt-secret-key-32chars-minimum-needed!') {
-    missing.push('JWT_SECRET (a secure, unique production secret is required)');
-  }
 
   if (missing.length > 0) {
     throw new Error(
-      `[Startup Error] Missing or insecure required environment variables in production:\n  - ${missing.join('\n  - ')}`
+      `[Startup Error] Missing required environment variables in production:\n  - ${missing.join('\n  - ')}`
     );
   }
 }
+
 

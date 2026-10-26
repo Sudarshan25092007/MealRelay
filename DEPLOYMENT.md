@@ -198,7 +198,7 @@ Under the **Environment Variables** section of your new Web Service, add:
 | `DATABASE_URL` | `postgresql://user:pass@ep-pooler.neon.tech/neondb?sslmode=require` | Your Neon pooled connection string. |
 | `JWT_SECRET` | *(Random 64-char string)* | Strong cryptographic key. Generate via `openssl rand -hex 32`. |
 | `JWT_EXPIRES_IN` | `7d` | Token expiration period. |
-| `CLIENT_URL` | `https://mealrelay.vercel.app` | Your Vercel frontend URL (without trailing slash). |
+| `CLIENT_URL` | `https://meal-relay.vercel.app` | Your Vercel frontend URL (without trailing slash). |
 
 > **Note on PORT:** Render automatically injects the `PORT` environment variable and routes web traffic to it. MealRelay reads `config.port` from `process.env.PORT` and binds to `0.0.0.0`, fulfilling Render's networking requirements.
 
@@ -273,7 +273,7 @@ Under **Environment Variables**, add:
 
 | Key | Value | Description |
 | :--- | :--- | :--- |
-| `VITE_API_BASE_URL` | `https://mealrelay-api.onrender.com/api` | The public base URL of your deployed Render backend (with `/api`). |
+| `VITE_API_BASE_URL` | `https://mealrelay.onrender.com/api` | The public base URL of your deployed Render backend (with `/api`). |
 
 > **Important:** Do NOT add `DATABASE_URL` or `JWT_SECRET` in Vercel! Frontend environment variables are public and bundled directly into client JavaScript.
 
@@ -286,15 +286,15 @@ Click **Deploy**. Vercel will clone the repository, install dependencies, run `v
 
 Once both Vercel and Render are deployed:
 
-1. Copy your assigned Vercel URL (e.g. `https://mealrelay.vercel.app`).
-2. Go to your **Render Dashboard** -> `mealrelay-api` -> **Environment Variables**.
+1. Copy your assigned Vercel URL (`https://meal-relay.vercel.app`).
+2. Go to your **Render Dashboard** -> `mealrelay` -> **Environment Variables**.
 3. Update `CLIENT_URL` to match your exact Vercel URL without a trailing slash:
    ```text
-   CLIENT_URL=https://mealrelay.vercel.app
+   CLIENT_URL=https://meal-relay.vercel.app
    ```
 4. If you use custom domains or preview deployments, provide comma-separated values:
    ```text
-   CLIENT_URL=https://mealrelay.vercel.app,https://www.mealrelay.org
+   CLIENT_URL=https://meal-relay.vercel.app,https://www.mealrelay.org
    ```
 5. Click **Save Changes**. Render will automatically trigger a rolling redeployment with the updated CORS configuration.
 
@@ -304,7 +304,7 @@ Once both Vercel and Render are deployed:
 
 Follow this end-to-end verification checklist against your live deployment:
 
-- [ ] **1. Service & Health Verification**: Open `https://your-render-url.onrender.com/api/health` in a browser. Confirm response:
+- [ ] **1. Service & Health Verification**: Open `https://mealrelay.onrender.com/api/health` in a browser. Confirm response:
   ```json
   { "status": "ok", "service": "MealRelay API", "database": "connected" }
   ```

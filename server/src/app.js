@@ -25,12 +25,20 @@ app.use((req, res, next) => {
 });
 
 // CORS Configuration
-const allowedOrigins = config.clientUrl
+const defaultOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://meal-relay.vercel.app'
+];
+
+const configuredOrigins = config.clientUrl
   ? config.clientUrl
       .split(',')
       .map((url) => url.trim().replace(/\/+$/, ''))
       .filter(Boolean)
-  : ['http://localhost:5173'];
+  : [];
+
+const allowedOrigins = Array.from(new Set([...defaultOrigins, ...configuredOrigins]));
 
 app.use(
   cors({
