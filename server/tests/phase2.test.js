@@ -4,7 +4,7 @@ import app from '../src/app.js';
 import prisma from '../src/config/prisma.js';
 import { processExpiredDonations } from '../src/modules/donations/expiry.job.js';
 
-describe('MealRelay Phase 2 Integration Tests', () => {
+describe('MealRelay Transactional Workflows & Verification Tests', () => {
   let donorToken = '';
   let donorUser = null;
   let donorOrg = null;

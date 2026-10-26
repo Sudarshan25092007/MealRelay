@@ -49,7 +49,7 @@ export const api = {
   login: (credentials) => apiRequest('/auth/login', { method: 'POST', body: credentials }),
   getMe: () => apiRequest('/auth/me', { method: 'GET' }),
 
-  // Donations (Phase 1 & Phase 2)
+  // Donations
   getDonations: (params = {}) => {
     const searchParams = new URLSearchParams();
     Object.entries(params).forEach(([key, val]) => {
@@ -64,14 +64,32 @@ export const api = {
   createDonation: (donationData) => apiRequest('/donations', { method: 'POST', body: donationData }),
   updateDonation: (id, updateData) => apiRequest(`/donations/${id}`, { method: 'PATCH', body: updateData }),
 
-  // Phase 2: Transactional Workflows
+  // Transactional Workflows
   claimDonation: (id) => apiRequest(`/donations/${id}/claim`, { method: 'POST' }),
   verifyPickup: (id, code) => apiRequest(`/donations/${id}/verify-pickup`, { method: 'POST', body: { code } }),
   cancelDonation: (id, reason) => apiRequest(`/donations/${id}/cancel`, { method: 'POST', body: { reason } }),
   getPickupCode: (id) => apiRequest(`/donations/${id}/pickup-code`, { method: 'GET' }),
   getDonationHistory: (id) => apiRequest(`/donations/${id}/history`, { method: 'GET' }),
 
-  // Phase 2: Dashboard
+  // Organization Management (Admin)
+  getOrganizations: (params = {}) => {
+    const searchParams = new URLSearchParams();
+    Object.entries(params).forEach(([key, val]) => {
+      if (val !== undefined && val !== null && val !== '') {
+        searchParams.append(key, val);
+      }
+    });
+    const queryStr = searchParams.toString();
+    return apiRequest(`/organizations${queryStr ? `?${queryStr}` : ''}`, { method: 'GET' });
+  },
+  getOrganizationById: (id) => apiRequest(`/organizations/${id}`, { method: 'GET' }),
+  updateOrganizationApproval: (id, { approvalStatus, reason }) =>
+    apiRequest(`/organizations/${id}/approval`, {
+      method: 'PATCH',
+      body: { approvalStatus, reason }
+    }),
+
+  // Dashboard & Metrics
   getDashboardSummary: () => apiRequest('/dashboard/summary', { method: 'GET' }),
 
   // Health

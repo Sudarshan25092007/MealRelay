@@ -342,7 +342,7 @@ export async function updateDonation(id, updateData, user) {
 }
 
 /**
- * Phase 2: Atomic Donation Claiming
+ * Atomic Donation Claiming
  * Uses an atomic conditional PostgreSQL update inside a transaction to prevent race conditions.
  */
 export async function claimDonation(id, user) {
@@ -474,7 +474,7 @@ export async function claimDonation(id, user) {
 }
 
 /**
- * Phase 2: Secure Pickup Verification Handshake
+ * Secure Pickup Verification Handshake
  * Validates the submitted pickup code, ensures claiming NGO identity, and transitions to COMPLETED.
  */
 export async function verifyPickup(id, submittedCode, user) {
@@ -590,7 +590,7 @@ export async function verifyPickup(id, submittedCode, user) {
 }
 
 /**
- * Phase 2: Explicit Cancellation Rules
+ * Explicit Cancellation Rules
  */
 export async function cancelDonation(id, reason, user) {
   const donation = await prisma.donation.findUnique({
@@ -686,7 +686,7 @@ export async function cancelDonation(id, reason, user) {
 }
 
 /**
- * Phase 2: Secure Pickup Code Retrieval
+ * Secure Pickup Code Retrieval
  * Exclusively reveals plaintext code to the owning donor of a CLAIMED donation.
  */
 export async function getPickupCode(id, user) {
@@ -731,7 +731,7 @@ export async function getPickupCode(id, user) {
 }
 
 /**
- * Phase 2: Audit History Timeline
+ * Audit History Timeline
  */
 export async function getDonationHistory(id, user) {
   const donation = await prisma.donation.findUnique({

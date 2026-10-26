@@ -8,8 +8,21 @@ import organizationRoutes from './modules/organizations/organization.routes.js';
 import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFound.js';
+import { apiLimiter } from './middleware/rateLimiter.js';
 
 const app = express();
+
+// Security Headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  if (config.isProd) {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  }
+  next();
+});
 
 // Security & Parsing Middlewares
 app.use(
@@ -22,6 +35,10 @@ app.use(
 
 app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: true, limit: '100kb' }));
+
+// Apply rate limiter to /api
+app.use('/api', apiLimiter);
+
 
 // Health Check Endpoint
 app.get('/api/health', async (req, res) => {

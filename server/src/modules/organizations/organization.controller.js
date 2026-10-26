@@ -1,5 +1,18 @@
 import * as orgService from './organization.service.js';
 
+export async function listOrganizations(req, res, next) {
+  try {
+    const result = await orgService.listOrganizations(req.query);
+    res.status(200).json({
+      success: true,
+      data: result.organizations,
+      pagination: result.pagination
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function getOrganization(req, res, next) {
   try {
     const org = await orgService.getOrganizationById(req.params.id);

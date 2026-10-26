@@ -20,7 +20,7 @@ export default function Navbar({ currentView, setView }) {
                 Meal<span className="text-emerald-600">Relay</span>
               </span>
               <span className="hidden sm:inline-block ml-2 text-xs font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                Phase 2 Core
+                Verified Food Recovery
               </span>
             </div>
           </div>
@@ -50,6 +50,19 @@ export default function Navbar({ currentView, setView }) {
                 >
                   Dashboard
                 </button>
+
+                {user?.role === 'ADMIN' && (
+                  <button
+                    onClick={() => setView('admin')}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                      currentView === 'admin'
+                        ? 'bg-purple-100 text-purple-800 font-bold'
+                        : 'text-purple-700 hover:text-purple-900 hover:bg-purple-50'
+                    }`}
+                  >
+                    Admin Console
+                  </button>
+                )}
 
                 {isDonor && (
                   <button

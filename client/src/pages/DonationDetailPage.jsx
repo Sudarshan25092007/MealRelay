@@ -280,7 +280,7 @@ export default function DonationDetailPage({ donationId, onBack }) {
           </div>
         )}
 
-        {/* WORKFLOW SECTION: NGO PICKUP VERIFICATION SUBMISSION */}
+        {/* WORKFLOW SECTION: NGO PICKUP VERIFICATION */}
         {donation.status === 'CLAIMED' && isClaimer && (
           <div className="p-6 sm:p-8 bg-indigo-50/50 border-b border-indigo-200">
             <h3 className="text-sm font-bold text-indigo-950 mb-1">

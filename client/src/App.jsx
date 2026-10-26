@@ -7,6 +7,7 @@ import CreateDonationPage from './pages/CreateDonationPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import AdminConsolePage from './pages/AdminConsolePage';
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
@@ -86,21 +87,21 @@ function AppContent() {
             onSelectDonation={handleSelectDonation}
           />
         )}
+
+        {currentView === 'admin' && (
+          <AdminConsolePage onNavigateHome={() => setCurrentView('browse')} />
+        )}
       </main>
 
       <footer className="bg-white border-t border-slate-200 py-6 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3">
           <div className="flex items-center space-x-2">
-            <span className="font-bold text-slate-700">MealRelay Platform</span>
+            <span className="font-bold text-slate-700">MealRelay</span>
             <span>•</span>
-            <span>Surplus-Food Recovery Coordination</span>
-            <span>•</span>
-            <span className="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-              Phase 2 Active
-            </span>
+            <span>Making surplus food count.</span>
           </div>
           <div>
-            Built with React, Vite, Node.js, Express, PostgreSQL & Prisma
+            Connecting surplus food with organizations that can distribute it.
           </div>
         </div>
       </footer>

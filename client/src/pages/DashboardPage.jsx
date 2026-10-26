@@ -70,6 +70,14 @@ export default function DashboardPage({ setView, onSelectDonation }) {
           </div>
 
           <div className="flex items-center space-x-2">
+            {user?.role === 'ADMIN' && (
+              <button
+                onClick={() => setView('admin')}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-xl shadow-sm transition-all"
+              >
+                Review Organizations
+              </button>
+            )}
             {isDonor && isApproved && (
               <button
                 onClick={() => setView('create-donation')}
@@ -96,8 +104,8 @@ export default function DashboardPage({ setView, onSelectDonation }) {
         </div>
       </div>
 
-      {/* Verification Notice if Pending */}
-      {!isApproved && (
+      {/* Verification Notice: Pending */}
+      {organization?.approvalStatus === 'PENDING' && (
         <div className="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start space-x-3">
           <span className="text-xl">⚠️</span>
           <div>
@@ -106,6 +114,21 @@ export default function DashboardPage({ setView, onSelectDonation }) {
             </h3>
             <p className="text-xs text-amber-800 mt-0.5">
               Your organization registration is currently under review by platform administrators. While pending, you may browse active offers in discovery mode. You will be able to {isDonor ? 'publish surplus food' : 'claim food offers'} once verified.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Verification Notice: Rejected */}
+      {organization?.approvalStatus === 'REJECTED' && (
+        <div className="mb-6 bg-rose-50 border border-rose-200 rounded-2xl p-5 flex items-start space-x-3">
+          <span className="text-xl">🛑</span>
+          <div>
+            <h3 className="text-sm font-bold text-rose-900">
+              Organization Verification Declined
+            </h3>
+            <p className="text-xs text-rose-800 mt-0.5">
+              Your organization registration could not be verified by platform administrators. You cannot {isDonor ? 'publish food batches' : 'claim donations'}. If you believe this is in error, please contact platform operations at support@mealrelay.org to request re-evaluation.
             </p>
           </div>
         </div>
@@ -266,7 +289,7 @@ export default function DashboardPage({ setView, onSelectDonation }) {
         </div>
 
         <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
-          Phase 2 Active
+          Platform Operational
         </span>
       </div>
 

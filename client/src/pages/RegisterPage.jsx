@@ -134,9 +134,25 @@ export default function RegisterPage({ onRegisterSuccess, onGoToLogin }) {
                   onChange={(e) => setFormData({ ...formData, organizationType: e.target.value })}
                   className="w-full text-xs sm:text-sm px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white"
                 >
-                  <option value="DONOR">Food Donor</option>
-                  <option value="NGO">NGO / Shelter</option>
+                  <option value="DONOR">Food Donor (Restaurant / Mess)</option>
+                  <option value="NGO">NGO / Shelter (Food Relief)</option>
                 </select>
+              </div>
+            </div>
+
+            {/* Role Onboarding Explanation */}
+            <div className="mb-3 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600">
+              {formData.organizationType === 'DONOR' ? (
+                <div>
+                  <span className="font-bold text-emerald-800">Food Donor Role:</span> For restaurants, hostel messes, cafeterias, and caterers. Once verified, you will be able to post surplus food batches with strict pickup deadlines and generate one-time pickup verification codes.
+                </div>
+              ) : (
+                <div>
+                  <span className="font-bold text-indigo-800">NGO / Relief Role:</span> For verified charity shelters, food banks, and relief organizations. Once verified, you will be able to discover, reserve, and pick up available surplus food from local donors.
+                </div>
+              )}
+              <div className="mt-1 text-[11px] text-slate-500">
+                🔒 All new accounts begin in <span className="font-semibold text-amber-700">PENDING</span> status. An administrator will review your organization details before donation posting or claiming is enabled.
               </div>
             </div>
 

@@ -42,7 +42,7 @@ router.patch(
   donationController.updateDonation
 );
 
-// Phase 2: Claiming
+// Donation Claiming
 router.post(
   '/:id/claim',
   requireAuth,
@@ -51,7 +51,7 @@ router.post(
   donationController.claimDonation
 );
 
-// Phase 2: Pickup Verification
+// Pickup Verification
 router.post(
   '/:id/verify-pickup',
   requireAuth,
@@ -60,7 +60,7 @@ router.post(
   donationController.verifyPickup
 );
 
-// Phase 2: Cancellation
+// Cancellation
 router.post(
   '/:id/cancel',
   requireAuth,
@@ -68,14 +68,14 @@ router.post(
   donationController.cancelDonation
 );
 
-// Phase 2: Secure Pickup Code Retrieval (for Owning Donor)
+// Secure Pickup Code Retrieval (for Owning Donor)
 router.get(
   '/:id/pickup-code',
   requireAuth,
   donationController.getPickupCode
 );
 
-// Phase 2: Audit History Timeline
+// Audit History Timeline
 router.get(
   '/:id/history',
   requireAuth,

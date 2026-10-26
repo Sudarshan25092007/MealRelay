@@ -14,3 +14,18 @@ export const authLimiter = rateLimit({
     }
   }
 });
+
+export const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: config.isTest ? 10000 : 300, // 300 requests per 15 mins for general API
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: {
+      message: 'Too many requests. Please slow down and try again later.',
+      code: 'TOO_MANY_REQUESTS'
+    }
+  }
+});
+
