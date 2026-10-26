@@ -219,6 +219,8 @@ Open your browser to `http://localhost:5173`.
 
 ## 7. Production Deployment & Operations
 
+> For a complete, step-by-step deployment guide targeting **Vercel** (frontend), **Render** (backend), and **Neon** (PostgreSQL), refer to the dedicated [DEPLOYMENT.md](DEPLOYMENT.md) guide.
+
 ### Production Environment Variables
 In production environments (e.g. AWS ECS, Render, Railway, DigitalOcean, Heroku), provide the following environment variables:
 

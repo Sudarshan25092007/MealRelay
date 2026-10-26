@@ -4,9 +4,10 @@ import prisma from './config/prisma.js';
 import { initExpiryScheduler } from './modules/donations/expiry.job.js';
 
 const PORT = config.port;
+const HOST = '0.0.0.0';
 
-const server = app.listen(PORT, () => {
-  console.log(`MealRelay Backend running on http://localhost:${PORT} [${config.env}]`);
+const server = app.listen(PORT, HOST, () => {
+  console.log(`MealRelay Backend running on http://${HOST}:${PORT} [${config.env}]`);
 });
 
 // Start background expiry task

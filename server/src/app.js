@@ -24,10 +24,24 @@ app.use((req, res, next) => {
   next();
 });
 
-// Security & Parsing Middlewares
+// CORS Configuration
+const allowedOrigins = config.clientUrl
+  ? config.clientUrl
+      .split(',')
+      .map((url) => url.trim().replace(/\/+$/, ''))
+      .filter(Boolean)
+  : ['http://localhost:5173'];
+
 app.use(
   cors({
-    origin: config.clientUrl || '*',
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (config.env === 'development' || config.isTest) return callback(null, true);
+      if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+        return callback(null, true);
+      }
+      return callback(null, false);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS']
   })
