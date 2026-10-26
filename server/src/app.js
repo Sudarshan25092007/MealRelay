@@ -5,6 +5,7 @@ import prisma from './config/prisma.js';
 import authRoutes from './modules/auth/auth.routes.js';
 import donationRoutes from './modules/donations/donation.routes.js';
 import organizationRoutes from './modules/organizations/organization.routes.js';
+import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFound.js';
 
@@ -50,6 +51,7 @@ app.get('/api/health', async (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/donations', donationRoutes);
 app.use('/api/organizations', organizationRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Fallback handlers
 app.use(notFoundHandler);

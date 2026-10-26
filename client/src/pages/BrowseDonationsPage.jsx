@@ -4,7 +4,7 @@ import DonationCard from '../components/DonationCard';
 import FilterBar from '../components/FilterBar';
 import Pagination from '../components/Pagination';
 
-export default function BrowseDonationsPage({ onSelectDonation, isOwnerView = false }) {
+export default function BrowseDonationsPage({ onSelectDonation, isOwnerView = false, isClaimsView = false }) {
   const [donations, setDonations] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, limit: 9, total: 0, totalPages: 1 });
   const [filters, setFilters] = useState({
@@ -12,8 +12,9 @@ export default function BrowseDonationsPage({ onSelectDonation, isOwnerView = fa
     limit: 9,
     locality: '',
     foodType: '',
-    status: isOwnerView ? '' : 'OPEN',
-    my: isOwnerView ? 'true' : 'false'
+    status: isOwnerView || isClaimsView ? '' : 'OPEN',
+    my: isOwnerView ? 'true' : 'false',
+    claims: isClaimsView ? 'true' : 'false'
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,8 +45,9 @@ export default function BrowseDonationsPage({ onSelectDonation, isOwnerView = fa
       limit: 9,
       locality: '',
       foodType: '',
-      status: isOwnerView ? '' : 'OPEN',
-      my: isOwnerView ? 'true' : 'false'
+      status: isOwnerView || isClaimsView ? '' : 'OPEN',
+      my: isOwnerView ? 'true' : 'false',
+      claims: isClaimsView ? 'true' : 'false'
     });
   };
 
@@ -54,17 +56,27 @@ export default function BrowseDonationsPage({ onSelectDonation, isOwnerView = fa
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const pageTitle = isOwnerView
+    ? 'My Donation Postings'
+    : isClaimsView
+    ? 'My Reserved Surplus Food'
+    : 'Surplus Food Recovery Feed';
+
+  const pageSubtitle = isOwnerView
+    ? 'Track, inspect, and update surplus food offers posted by your organization.'
+    : isClaimsView
+    ? 'Surplus food contributions claimed by your NGO awaiting pickup verification or completed.'
+    : 'Active surplus food contributions verified for pickup by approved community organizations.';
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header section */}
       <div className="mb-6">
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          {isOwnerView ? 'My Donation Management' : 'Surplus Food Recovery Feed'}
+          {pageTitle}
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 mt-1">
-          {isOwnerView
-            ? 'Track, inspect, and update surplus food offers posted by your organization.'
-            : 'Active surplus food contributions verified for pickup by approved community organizations.'}
+          {pageSubtitle}
         </p>
       </div>
 
@@ -73,7 +85,7 @@ export default function BrowseDonationsPage({ onSelectDonation, isOwnerView = fa
         filters={filters}
         setFilters={setFilters}
         onReset={handleResetFilters}
-        isOwnerView={isOwnerView}
+        isOwnerView={isOwnerView || isClaimsView}
       />
 
       {/* Error Alert */}
@@ -120,6 +132,8 @@ export default function BrowseDonationsPage({ onSelectDonation, isOwnerView = fa
           <p className="text-xs text-slate-500 mb-6">
             {isOwnerView
               ? "Your organization hasn't published any donations matching these criteria."
+              : isClaimsView
+              ? "Your NGO hasn't claimed any surplus donations matching these criteria."
               : 'There are currently no active surplus donations matching your filter criteria.'}
           </p>
           <button

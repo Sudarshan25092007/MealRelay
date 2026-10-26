@@ -49,7 +49,7 @@ export const api = {
   login: (credentials) => apiRequest('/auth/login', { method: 'POST', body: credentials }),
   getMe: () => apiRequest('/auth/me', { method: 'GET' }),
 
-  // Donations
+  // Donations (Phase 1 & Phase 2)
   getDonations: (params = {}) => {
     const searchParams = new URLSearchParams();
     Object.entries(params).forEach(([key, val]) => {
@@ -63,6 +63,16 @@ export const api = {
   getDonationById: (id) => apiRequest(`/donations/${id}`, { method: 'GET' }),
   createDonation: (donationData) => apiRequest('/donations', { method: 'POST', body: donationData }),
   updateDonation: (id, updateData) => apiRequest(`/donations/${id}`, { method: 'PATCH', body: updateData }),
+
+  // Phase 2: Transactional Workflows
+  claimDonation: (id) => apiRequest(`/donations/${id}/claim`, { method: 'POST' }),
+  verifyPickup: (id, code) => apiRequest(`/donations/${id}/verify-pickup`, { method: 'POST', body: { code } }),
+  cancelDonation: (id, reason) => apiRequest(`/donations/${id}/cancel`, { method: 'POST', body: { reason } }),
+  getPickupCode: (id) => apiRequest(`/donations/${id}/pickup-code`, { method: 'GET' }),
+  getDonationHistory: (id) => apiRequest(`/donations/${id}/history`, { method: 'GET' }),
+
+  // Phase 2: Dashboard
+  getDashboardSummary: () => apiRequest('/dashboard/summary', { method: 'GET' }),
 
   // Health
   checkHealth: () => apiRequest('/health', { method: 'GET' })

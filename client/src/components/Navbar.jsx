@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar({ currentView, setView }) {
-  const { user, organization, isAuthenticated, isDonor, isApproved, logout } = useAuth();
+  const { user, organization, isAuthenticated, isDonor, isNgo, isApproved, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
@@ -19,14 +19,14 @@ export default function Navbar({ currentView, setView }) {
               <span className="text-xl font-bold tracking-tight text-slate-900">
                 Meal<span className="text-emerald-600">Relay</span>
               </span>
-              <span className="hidden sm:inline-block ml-2 text-xs font-medium text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                Phase 1 Core
+              <span className="hidden sm:inline-block ml-2 text-xs font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                Phase 2 Core
               </span>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <nav className="flex items-center space-x-1 sm:space-x-3">
+          <nav className="flex items-center space-x-1 sm:space-x-2">
             <button
               onClick={() => setView('browse')}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
@@ -60,7 +60,20 @@ export default function Navbar({ currentView, setView }) {
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                   >
-                    My Donations
+                    My Postings
+                  </button>
+                )}
+
+                {isNgo && (
+                  <button
+                    onClick={() => setView('my-claims')}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                      currentView === 'my-claims'
+                        ? 'bg-emerald-50 text-emerald-700 font-semibold'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    My Reservations
                   </button>
                 )}
 

@@ -110,6 +110,22 @@ export const updateDonationSchema = z
     }
   );
 
+export const verifyPickupSchema = z.object({
+  code: z
+    .string({ required_error: 'Verification code is required' })
+    .trim()
+    .min(4, 'Verification code must be at least 4 characters')
+    .max(12, 'Verification code must not exceed 12 characters')
+});
+
+export const cancelDonationSchema = z.object({
+  reason: z
+    .string()
+    .trim()
+    .max(250, 'Cancellation reason must not exceed 250 characters')
+    .optional()
+});
+
 export const queryDonationsSchema = z.object({
   page: z.coerce.number().int().positive().default(1),
   limit: z.coerce.number().int().positive().max(50).default(10),
@@ -117,5 +133,6 @@ export const queryDonationsSchema = z.object({
   locality: z.string().trim().optional(),
   foodType: z.enum(FOOD_TYPES).optional(),
   my: z.enum(['true', 'false']).optional(),
+  claims: z.enum(['true', 'false']).optional(),
   activeOnly: z.enum(['true', 'false']).optional()
 });

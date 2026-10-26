@@ -32,6 +32,7 @@ function AppContent() {
           <BrowseDonationsPage
             onSelectDonation={handleSelectDonation}
             isOwnerView={false}
+            isClaimsView={false}
           />
         )}
 
@@ -39,6 +40,15 @@ function AppContent() {
           <BrowseDonationsPage
             onSelectDonation={handleSelectDonation}
             isOwnerView={true}
+            isClaimsView={false}
+          />
+        )}
+
+        {currentView === 'my-claims' && (
+          <BrowseDonationsPage
+            onSelectDonation={handleSelectDonation}
+            isOwnerView={false}
+            isClaimsView={true}
           />
         )}
 
@@ -86,7 +96,7 @@ function AppContent() {
             <span>Surplus-Food Recovery Coordination</span>
             <span>•</span>
             <span className="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-              Phase 1 Backend Core & Frontend Shell
+              Phase 2 Active
             </span>
           </div>
           <div>

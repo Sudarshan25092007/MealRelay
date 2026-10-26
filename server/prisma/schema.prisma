@@ -119,6 +119,7 @@ model PickupVerification {
   id          String    @id @default(uuid())
   donationId  String    @unique
   codeHash    String
+  attempts    Int       @default(0)
   expiresAt   DateTime
   verifiedAt  DateTime?
   createdAt   DateTime  @default(now())
