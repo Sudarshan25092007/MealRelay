@@ -219,7 +219,11 @@ Open your browser to `http://localhost:5173`.
 
 ## 7. Production Deployment & Operations
 
-> For a complete, step-by-step deployment guide targeting **Vercel** (frontend), **Render** (backend), and **Neon** (PostgreSQL), refer to the dedicated [DEPLOYMENT.md](DEPLOYMENT.md) guide.
+### Production Architecture
+MealRelay is architected for zero-overhead continuous deployment:
+- **Frontend**: [Vercel](https://vercel.com) — React + Vite static bundle with automated Git deployments.
+- **Backend**: [Render](https://render.com) — Node.js + Express web service with background expiry scheduling.
+- **Database**: [Neon](https://neon.tech) — Serverless PostgreSQL with connection pooling.
 
 ### Production Environment Variables
 In production environments (e.g. AWS ECS, Render, Railway, DigitalOcean, Heroku), provide the following environment variables:
@@ -232,7 +236,9 @@ In production environments (e.g. AWS ECS, Render, Railway, DigitalOcean, Heroku)
 | `JWT_SECRET` | Secure cryptographic secret | Minimum 32 characters, randomly generated |
 | `JWT_EXPIRES_IN` | Token expiration duration | `7d` |
 | `CLIENT_URL` | Deployed frontend domain for CORS | `https://mealrelay.example.com` |
-| `VITE_API_BASE_URL` | Frontend API endpoint | `https://api.mealrelay.example.com/api` |
+| `ADMIN_EMAIL` | Primary administrator email for bootstrap | `admin@mealrelay.org` |
+| `ADMIN_BOOTSTRAP_SECRET` | High-entropy secret for one-time admin setup | Random 32+ character secret |
+| `VITE_API_BASE_URL` | Frontend API endpoint (Client only) | `https://api.mealrelay.example.com/api` |
 
 The backend validates required production settings at startup and safely aborts if `DATABASE_URL` or a secure `JWT_SECRET` is missing.
 
@@ -261,6 +267,13 @@ The backend validates required production settings at startup and safely aborts 
 ---
 
 ## 8. API Reference Summary
+
+### Interactive OpenAPI Documentation (`/api/docs`)
+- `GET /api/docs` — Interactive Swagger UI explorer for executing and inspecting all endpoints with JWT bearer authentication.
+- `GET /api/docs/openapi.json` — OpenAPI 3.0.3 specification in machine-readable JSON format.
+
+### Platform Administration (`/api/admin`)
+- `POST /api/admin/bootstrap` — One-time provisioning endpoint for the initial platform administrator. Secured by timing-safe secret matching against `ADMIN_BOOTSTRAP_SECRET` and `ADMIN_EMAIL`. Rate-limited and permanently sealed in database audit history.
 
 ### Authentication (`/api/auth`)
 - `POST /api/auth/register` — Register a new donor or NGO account (starts in `PENDING` status).

@@ -6,6 +6,8 @@ import authRoutes from './modules/auth/auth.routes.js';
 import donationRoutes from './modules/donations/donation.routes.js';
 import organizationRoutes from './modules/organizations/organization.routes.js';
 import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
+import adminRoutes from './modules/admin/admin.routes.js';
+import docsRoutes from './docs/docs.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFound.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
@@ -87,10 +89,12 @@ app.get('/api/health', async (req, res) => {
 });
 
 // API Routes
+app.use('/api/docs', docsRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/donations', donationRoutes);
 app.use('/api/organizations', organizationRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Fallback handlers
 app.use(notFoundHandler);

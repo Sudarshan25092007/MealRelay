@@ -390,7 +390,7 @@ export default function DonationDetailPage({ donationId, onBack }) {
         {history.length > 0 && (
           <div className="p-6 sm:p-8 bg-slate-50 border-t border-slate-100">
             <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
-              Immutable Platform Audit Trail
+              Audit Trail & History
             </h2>
             <div className="relative pl-6 space-y-4 border-l-2 border-slate-200 ml-2">
               {history.map((evt) => (

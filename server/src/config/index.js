@@ -33,6 +33,8 @@ export const config = {
   jwtSecret,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
+  adminEmail: process.env.ADMIN_EMAIL ? process.env.ADMIN_EMAIL.trim().toLowerCase() : null,
+  adminBootstrapSecret: process.env.ADMIN_BOOTSTRAP_SECRET ? process.env.ADMIN_BOOTSTRAP_SECRET.trim() : null,
   isTest: process.env.NODE_ENV === 'test',
   isProd
 };

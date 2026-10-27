@@ -6,16 +6,10 @@ export default function DashboardPage({ setView, onSelectDonation }) {
   const { user, organization, isDonor, isNgo, isApproved } = useAuth();
   const [dashboardData, setDashboardData] = useState(null);
   const [recentOffers, setRecentOffers] = useState([]);
-  const [backendHealth, setBackendHealth] = useState('checking');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Check health
-    api.checkHealth()
-      .then((res) => setBackendHealth(res.status === 'ok' ? 'healthy' : 'degraded'))
-      .catch(() => setBackendHealth('offline'));
-
     // Fetch real database summary
     setIsLoading(true);
     api.getDashboardSummary()
@@ -265,33 +259,6 @@ export default function DashboardPage({ setView, onSelectDonation }) {
           </div>
         </div>
       )}
-
-      {/* System Status Banner */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs flex items-center justify-between mb-8">
-        <div className="flex items-center space-x-3">
-          <span
-            className={`w-3 h-3 rounded-full ${
-              backendHealth === 'healthy'
-                ? 'bg-emerald-500'
-                : backendHealth === 'checking'
-                ? 'bg-amber-400 animate-pulse'
-                : 'bg-red-500'
-            }`}
-          ></span>
-          <div>
-            <span className="text-xs font-bold text-slate-800">
-              PostgreSQL & Express Backend: {backendHealth.toUpperCase()}
-            </span>
-            <span className="text-[11px] text-slate-500 block">
-              Automated background expiry worker running & verified
-            </span>
-          </div>
-        </div>
-
-        <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
-          Platform Operational
-        </span>
-      </div>
 
       {/* Recent Offers Snippet */}
       {recentOffers.length > 0 && (
