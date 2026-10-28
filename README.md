@@ -5,7 +5,7 @@
 
 ---
 
-[Video Link](https://drive.google.com/drive/folders/1g_1zc-jBZwazrnA4NB83gMJcL2Qf0EI3?usp=sharing)
+[Video Link](https://drive.google.com/file/d/1FMiWIGm0qRYUCpWvCh2hOqN__I4oMmX1/view)
 
 ## 1. Product Overview
 
