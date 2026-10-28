@@ -5,6 +5,8 @@
 
 ---
 
+[Video Link](https://drive.google.com/drive/folders/1g_1zc-jBZwazrnA4NB83gMJcL2Qf0EI3?usp=sharing)
+
 ## 1. Product Overview
 
 Millions of portions of edible, freshly prepared food from cafeterias, restaurants, messes, and event caterers are discarded daily due to a lack of immediate coordination with community organizations that can redistribute it safely. 
